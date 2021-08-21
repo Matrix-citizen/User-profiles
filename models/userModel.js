@@ -8,4 +8,14 @@ function findAll() {
   });
 }
 
-module.exports = { findAll };
+function findById (id) {
+  return new Promise((resolve, reject) => {
+    const user = users.find((element) => element.id === id);
+    resolve(user);
+  })
+}
+
+module.exports = { 
+  findAll,
+  findById 
+};
