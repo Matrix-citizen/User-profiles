@@ -24,18 +24,36 @@ async function getUser(req, res, id) {
 
     if (!user) {
       res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ message: 'User Not Found' }));
+      res.end(JSON.stringify({ message: "User Not Found" }));
     } else {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(user));
     }
-
   } catch (error) {
     console.log(error);
   }
 }
 
-module.exports = { 
+// Create a User
+// It's route: POST /api/users
+async function createUser(req, res) {
+  try {
+    const user = {
+      name: "Sam",
+      surname: "Brown",
+      email: "sam@yahoo.com",
+    };
+    const newUser = await User.create(user);
+
+    res.writeHead(201, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(newUser));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = {
   getUsers,
-  getUser 
+  getUser,
+  createUser,
 };
