@@ -3,6 +3,8 @@
 // Also interacting with model, get the data from it.
 const User = require("../models/userModel");
 
+const { getPostData } = require('../utils');
+
 // Gets All Users
 // It's route: GET /api/users
 async function getUsers(req, res) {
@@ -38,15 +40,20 @@ async function getUser(req, res, id) {
 // It's route: POST /api/users
 async function createUser(req, res) {
   try {
+    const body = await getPostData(req);
+    const { name, surname, email } = JSON.parse(body);
+    
     const user = {
-      name: "Sam",
-      surname: "Brown",
-      email: "sam@yahoo.com",
+      name,
+      surname,
+      email
     };
+
     const newUser = await User.create(user);
 
     res.writeHead(201, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(newUser));
+
   } catch (error) {
     console.log(error);
   }
@@ -55,5 +62,5 @@ async function createUser(req, res) {
 module.exports = {
   getUsers,
   getUser,
-  createUser,
+  createUser
 };

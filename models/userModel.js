@@ -30,5 +30,5 @@ function create(user) {
 module.exports = {
   findAll,
   findById,
-  create,
+  create
 };
