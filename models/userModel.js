@@ -27,8 +27,18 @@ function create(user) {
   });
 }
 
+function update(id, user) {
+  return new Promise((resolve, reject) => {
+      const index = users.findIndex((u) => u.id === id)
+      users[index] = { id,  ...user }
+    writeDataToFile("./data/users.json", users);
+    resolve(users[index]);
+  });
+}
+
 module.exports = {
   findAll,
   findById,
-  create
+  create,
+  update
 };
