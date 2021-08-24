@@ -87,9 +87,30 @@ async function updateUser(req, res, id) {
   }
 }
 
+// Delete User
+// It's route: DELETE /api/user/:id
+async function deleteUser(req, res, id) {
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: "User Not Found" }));
+    } else {
+      await User.remove(id)
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: `User ${id} removed` }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 module.exports = {
   getUsers,
   getUser,
   createUser,
-  updateUser
+  updateUser,
+  deleteUser
 };

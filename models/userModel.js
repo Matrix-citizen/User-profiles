@@ -1,6 +1,6 @@
 // Model deals with data (json file)
 // Functions below strictly be used to get/create/update/delete data.
-const users = require("../data/users");
+let users = require("../data/users");
 const { v4: uuidv4 } = require("uuid");
 
 const { writeDataToFile } = require("../utils");
@@ -36,9 +36,18 @@ function update(id, user) {
   });
 }
 
+function remove(id) {
+  return new Promise((resolve, reject) => {
+    users = users.filter((u) => u.id != id) 
+    writeDataToFile("./data/users.json", users);
+    resolve();
+  });
+}
+
 module.exports = {
   findAll,
   findById,
   create,
-  update
+  update,
+  remove
 };
